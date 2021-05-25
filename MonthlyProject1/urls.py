@@ -18,7 +18,7 @@ from django.urls import path
 from homepage import views 
 
 urlpatterns = [
-    path('domain/',views.domain),
-    path('domain/docs',views.EDA),
+    path('',views.domain),
+    path('docs/',views.EDA),
     path('admin/', admin.site.urls),
 ]

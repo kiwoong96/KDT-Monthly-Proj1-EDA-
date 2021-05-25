@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Main</title>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">  
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+        {% load static %}
+        <link rel="stylesheet" href="{% static "/CSS/main.css"%}">  
+    </head>
+
+    <body>
+        <header>
+            <div>
+                <div class="header img-wrapper">
+                    <div class="img">
+                        <a href="https://velog.io/@kiwoong96">
+                            <img src="{% static "/img/blog_icon.png" %}" alt='blog'>
+                        </a>
+                    </div>
+                    <div class="img">
+                        <a href="https://github.com/kiwoong96">
+                            <img src="{% static "/img/github_icon.png" %}" alt='github'>
+                        </a>    
+                    </div>
+                    <div class="headertext" id="base">
+                        <ul class="nav">
+                            <li class="nav-title">
+                                Repayment of Loan
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href='javascript:location.reload()'>
+                                    🏨 home
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="https://www.kaggle.com/zhijinzhai/loandata">
+                                    📃 Data
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href='./docs' target='_blank'>
+                                    📝 Docs
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div> 
+        </header> 
+        <main>
+            <div>
+            <div class="main">
+                <div class="main content-wrapper">
+                    <div class="card-chart1">
+                        <div class="card-header">
+                            <div class="card-title text-left">
+                                <i class="fas fa-graduation-cap" style="color : #847072;"></i> Number of Educational background
+                            </div>
+                            <div class="card-category" >최종학력은 고등학교 졸업과 대학교 졸업의 경우가 가장 많다.</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <div id="c1" style="place-content: center;"></div>
+		                            <script>
+                                        var xValue = ['High School', 'college', 'Bechalor','Master'];
+                                        var yValue = [209, 220, 67, 4];
+                                        var trace1 = {
+                                            x: xValue,
+                                            y: yValue,
+                                            type: 'bar',
+                                            text: yValue.map(String),
+                                            textposition: 'auto',
+                                            hoverinfo: 'none',
+                                            marker: {
+                                                color: 'green',
+                                                opacity: 0.5,
+                                                line: {
+                                                color: 'green',
+                                                width: 1.5
+                                                }
+                                            }
+                                        };
+                                        var data = [trace1];
+                                        
+                                        var layout = {
+                                            title : 'Comparison by Educational background',
+                                            barmode : 'stack',
+                                            width : 1610,
+                                        }
+                                        C1 = document.getElementById('c1');
+                                        Plotly.newPlot(C1, data,layout);
+                                    </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="parallel-box">
+                <div class="parallel-chart">
+                    <div class="parallel-header">
+                        <div class="parallel-title">
+                            <i class="fas fa-user-graduate" style="color : #847072;"></i> Repayment based on educational background
+                        </div>
+                        <div class="parallel-category">최종학력이 높을 수록 대출상환 비율이 높다.</div>                      
+                    </div>
+                    <div class="parallel-body">
+                        <div class = "parallel-area">
+                            <div id='minichart1'></div>
+                            <script>
+                                var colorscaleValue = [
+                                [0, '#DCC1B0'],
+                                [1, '#847072']
+                                ];
+
+                                var data = [
+                                {
+                                    z: [[0.588517], [0.605656], [0.611940],[0.7500]],
+                                    x: ['Loan Status'],
+                                    y: ['High School','college','Bechalor','Master'],
+                                    type: 'heatmap',
+                                    colorscale: colorscaleValue,
+                                    hoverongaps: false
+                                }];
+                                var layout = {
+                                height: 400,
+                                width: 500
+                                }
+                                
+                                MC1 = document.getElementById('minichart1')
+                                Plotly.newPlot(MC1, data, layout);
+                            </script>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="parallel-chart">
+                    <div class="parallel-header">
+                        <div class="parallel-title">
+                            <i class="far fa-check-circle" style="color : green"></i> 75,166 &nbsp
+                            <i class="far fa-times-circle" style="color: red"></i> 44,224
+                        </div>
+                        <div class="parallel-category">대출을 상환하는 사람이 대출을 상환하지 않는 사람보다 많다.</div>
+                    </div>
+                    <div class="parallel-body">
+                        <div class = "parallel-area">
+                            <div id='minichart2'></div>
+                            <script>
+                                var data = [{
+                                values: [300, 200],
+                                labels: ['Repayment', 'NO Repayment'],
+                                type: 'pie',
+                                marker: {
+                                colors: ['#DCC1B0','#847072']
+                                },
+                                }];
+
+                                var layout = {
+                                height: 400,
+                                width: 500
+                                };
+                                MC2 = document.getElementById('minichart2')
+                                Plotly.newPlot(MC2, data, layout);
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="parallel-chart">
+                    <div class="parallel-header">
+                        <div class="parallel-title">
+                            <i class="fas fa-venus-mars" style="color : #847072;"></i> Repayment rate based on Gender
+                        </div>
+                        <div class="parallel-category">여성이 남성보다 상환률이 높다.</div>
+                    </div>
+                    <div class="parallel-body">
+                        <div class = "parallel-area">
+                            <div id='minichart3'></div>
+                            <script>
+                                var colorscaleValue = [
+                                [0, '#DCC1B0'],
+                                [1, '#847072']
+                                ];
+
+                                var data = [
+                                {
+                                    z: [[0.583924], [0.688312]],
+                                    x: ['Loan Status'],
+                                    y: ['Male','Female'],
+                                    type: 'heatmap',
+                                    colorscale: colorscaleValue,
+                                    hoverongaps: false
+                                }
+                                ];
+                                MC3 = document.getElementById('minichart3')
+                                Plotly.newPlot(MC3, data, layout);
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            
+            <!--
+            #1d1e2e
+            #171623
+            -->
+
+
+
+
+            <div>
+            <div class="main">
+                <div class="main content-wrapper">
+                    <div class="card-chart1">
+                        <div class="card-header">
+                            <div class="card-title text-left">
+                                <i class="fas fa-calculator" style="color : #847072;"></i> Number of Loan repayments by age
+                            </div>
+                            <div class="card-category">25세 ~ 35세에 대출이 많고, 상환의 비율이 더 높다.</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <div id="c2" style="place-content: center;"></div>
+		                            <script>
+                                        var x1 = [29, 37, 33, 27, 24, 31, 28, 40, 33, 41, 30, 26, 27, 20, 24, 26, 30,29, 22, 24, 25, 28, 37, 32, 34, 28, 35, 27, 24, 44, 31, 27, 21, 30,38, 34, 31, 23, 27, 39, 30, 25, 50, 23, 38, 27, 31, 40, 32, 29, 26,25, 35, 41, 37, 34, 45, 26, 32, 28, 34, 29, 26, 26, 22, 27, 33, 28, 24, 37, 36, 18, 25, 40, 29, 26, 30, 33, 30, 32, 25, 35, 30, 26, 29,26, 46, 36, 38, 32, 30, 35, 29, 26, 32, 25, 33, 39, 28, 26, 26, 28,39, 29, 33, 27, 34, 26, 28, 32, 27, 21, 39, 38, 36, 33, 21, 25, 29,33, 47, 33, 23, 24, 27, 32, 33, 27, 35, 37, 28, 33, 34, 29, 34, 29, 24, 34, 25, 24, 30, 28, 24, 26, 24, 29, 31, 26, 25, 29, 38, 41, 26,26, 35, 37, 25, 24, 34, 33, 38, 38, 26, 37, 42, 49, 26, 41, 38, 26, 32, 27, 33, 30, 26, 35, 46, 27, 22, 27, 30, 27, 47, 30, 26, 38, 46,35, 45, 36, 38, 27, 27, 29, 30, 28, 26, 30, 38, 28];
+                                        var x2 = [45, 50, 33, 27, 28, 35, 29, 36, 28, 26, 29, 39, 26, 26, 27, 26, 40,32, 32, 26, 26, 43, 25, 26, 26, 29, 39, 34, 31, 33, 33, 37, 27, 37,33, 29, 27, 33, 24, 21, 32, 30, 31, 30, 24, 35, 22, 32, 32, 50, 27, 35, 35, 34, 21, 25, 27, 26, 44, 39, 34, 37, 34, 45, 24, 28, 28, 37,35, 43, 29, 29, 33, 34, 25, 30, 31, 35, 37, 44, 28, 25, 29, 33, 37,33, 24, 27, 43, 46, 34, 32, 38, 27, 33, 36, 26, 34, 22, 31, 29, 38,30, 45, 35, 30, 31, 31, 28, 29, 29, 27, 27, 33, 28, 25, 40, 23, 35, 24, 34, 22, 20, 23, 33, 26, 28, 43, 34, 38, 26, 43, 26, 33, 24, 30, 32, 22, 47, 20, 28, 35, 27, 33, 30, 31, 26, 37, 26, 35, 29, 23, 23,30, 34, 36, 26, 29, 28, 27, 24, 31, 28, 27, 25, 24, 28, 28, 35, 38,38, 29, 35, 24, 39, 25, 38, 30, 21, 46, 31, 29, 35, 30, 27, 31, 33,34, 28, 42, 32, 30, 25, 27, 21, 24, 29, 40, 29, 29, 30, 26, 36, 27,20, 26, 26, 27, 23, 39, 27, 30, 33, 27, 35, 29, 50, 31, 31, 29, 35,  39, 29, 30, 33, 26, 25, 37, 26, 26, 27, 34, 37, 36, 33, 30, 30, 36,29, 36, 32, 29, 36, 30, 31, 19, 26, 34, 35, 35, 38, 29, 28, 22, 32,31, 28, 37, 25, 19, 51, 29, 23, 30, 23, 34, 31, 24, 42, 40, 29, 32,28, 35, 30, 44, 37, 31, 36, 31, 42, 28, 30, 30, 24, 34, 29, 38, 34,28, 30, 41, 29, 37, 36, 30, 27, 29, 40, 28];
+                                        
+                                        var No_Repayment= {
+                                        x: x1,
+                                        name: 'No Repayment',
+                                        marker: {
+                                            color: "rgba(255, 100, 102, 0.7)", 
+                                            line: {
+                                            color:  "rgba(255, 100, 102, 1)", 
+                                            width: 1
+                                            }
+                                        },  
+                                        opacity: 0.5, 
+                                        type: "histogram", 
+                                        };
+
+                                        var Repayment = {
+                                        x: x2,
+                                        name: 'Repayment',
+                                        marker: {
+                                            color: "rgba(100, 200, 102, 0.7)",
+                                            line: {
+                                            color:  "rgba(100, 200, 102, 1)", 
+                                            width: 1
+                                            } 
+                                        }, 
+                                        opacity: 0.75, 
+                                        type: "histogram",
+                                        };
+
+                                        var data = [No_Repayment,Repayment];
+                                        var layout = {
+                                            bargap: 0.05, 
+                                            bargroupgap: 0.2, 
+                                            barmode: "stack", 
+                                            title: "Comparison by age, repayment", 
+                                            xaxis: {title: "Age"}, 
+                                            yaxis: {title: "Count"}
+                                        };
+                                        C2 = document.getElementById('c2');
+                                        Plotly.newPlot(C2, data,layout);
+                                    </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            
+        </main>
+        
+        
+        <div class='footer'>
+            <ul class="footer-item">
+                <li>
+                    <a class="footer-category">
+                        © 2021, made by Kiwoong
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+    </body>
+
+</html>
